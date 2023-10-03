@@ -15,6 +15,12 @@ Your application must make use of the following libraries:
 
 ## Steps to Completion
 
+cd to my project
+
+docker-compose up
+
+db-migrate db:create --config ./database.json shopping_test
+
 ### 1. Plan to Meet Requirements
 
 In this repo there is a `REQUIREMENTS.md` document which outlines what this API needs to supply for the frontend, as well as the agreed upon data shapes to be passed between front and backend. This is much like a document you might come across in real life when building or extending an API. 

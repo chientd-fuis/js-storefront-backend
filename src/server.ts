@@ -1,15 +1,24 @@
 import { Request, Response } from 'express'
 import express from "express";
-import authencationApi from './handlers/authencationHandler'
+import userHandler from './handlers/userHandler';
+import productHandler from './handlers/productHandler';
+import orderHandler from './handlers/orderHandler';
+import bodyParser from 'body-parser';
 
 const app: express.Application = express()
 const address: string = "0.0.0.0:3000"
 
 app.use(express.json())
 
-authencationApi(app);
+app.use(bodyParser.urlencoded({ 
+    extended: true 
+}));
 
-app.get('/', function (req: Request, res: Response) {
+userHandler(app);
+productHandler(app);
+orderHandler(app);
+
+app.get('/', function (_req: Request, res: Response) {
     res.send('Hello World!')
 })
 

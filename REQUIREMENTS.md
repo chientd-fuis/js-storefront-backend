@@ -5,27 +5,38 @@ These are the notes from a meeting with the frontend developer that describe wha
 
 ## API Endpoints
 #### Products
-- Index 
-- Show
-- Create [token required]
-- [OPTIONAL] Top 5 most popular products 
-- [OPTIONAL] Products by category (args: product category)
+- Index (**GET** `/products` )
+- Show (**GET** `/products/:productID` )
+- Create [token required] (**POST** `/products/add` )
+   - Body: `{ name: string, price: number }`
+- Update [token required] (**PUT** `/products/:productID?name=:update_name&price=:update_price` )
+- Delete [token required] (**DELETE** `/products/:productID`)
 
 #### Users
-- Index [token required]
-- Show [token required]
-- Create N[token required]
+- Show [token required] (**GET** `/users/:userID` )
+- Create (**POST** `/users/sign-up` )
+  - Body: `{ first_name: string, last_name: string, password: string }`
+- Login (**POST** `/users/sign-in` )
+  - Body: `{ user_id: string, password: string }`
+- Update (**PUT** `/users/:userID` )
+  - Body: `{ first_name: string, last_name: string, password: string }`
+- Delete (**DELETE** `/users/userID` )
 
 #### Orders
-- Current Order by user (args: user id)[token required]
-- [OPTIONAL] Completed Orders by user (args: user id)[token required]
+- Show orders by ID[token required] (**GET** `/orders/:orderID` )
+- Show orders by user_ID[token required] (**GET** `/orders?user_id=:userID` )
+- Create [token required] (**POST** `/orders/add` )
+  - Body: `{ products: [ { product_id: string, quantity: number } ] }`
+- Update quality of product in orders [token required] (**PUT** `/orders/:orderID/:productID?quality=update_quality` )
+- Delete products in orders [token required] (**DELETE** `/orders/:orderID/:productID` )
+- Update status of orders [token required] (**PUT** `/orders/:orderID?status=update_status` )
+- Delete orders [token required] (**DELETE** `/orders/:orderID` )
 
 ## Data Shapes
 #### Product
--  id
+- id
 - name
 - price
-- [OPTIONAL] category
 
 #### User
 - id
@@ -35,8 +46,10 @@ These are the notes from a meeting with the frontend developer that describe wha
 
 #### Orders
 - id
-- id of each product in the order
-- quantity of each product in the order
 - user_id
 - status of order (active or complete)
 
+#### Order Details
+- id of order
+- id of each product in the order
+- quantity of each product in the order

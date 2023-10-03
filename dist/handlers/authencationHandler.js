@@ -2,11 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const user_1 = require("../model/user");
 const store = new user_1.User();
-const create = async (req, res) => {
+const create = async (_req, res) => {
     try {
         const user = {
-            username: req.body.username,
-            password: req.body.password,
+            username: _req.body.username,
+            password: _req.body.password,
         };
         const newUser = await store.create(user);
         res.json(newUser);
@@ -16,11 +16,11 @@ const create = async (req, res) => {
         res.json(err);
     }
 };
-const show = async (req, res) => {
+const show = async (_req, res) => {
     try {
         const user = {
-            username: req.body.username,
-            password: req.body.password,
+            username: _req.body.username,
+            password: _req.body.password,
         };
         const newUser = await store.authenticate(user);
         res.json(newUser);
