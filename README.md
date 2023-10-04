@@ -48,6 +48,8 @@ show all tables
 ```
 \dt
 ```
+![image!](https://github.com/chientd-fuis/js-storefront-backend/blob/main/assets/connect-db.png "alt")
+
 ## Start application (http://localhost:3000)
 - Run watch
     ```
