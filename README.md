@@ -34,6 +34,19 @@ cd to your project
     ```
     npm run migrate.up
     ```
+## Connect to database
+Get containerID
+```
+docker ps -a
+```
+Connect to database instance
+```
+docker exec -it <containerID> psql -U shopping_user shopping
+```
+show all tables
+```
+\dt
+```
 ## Start application (http://localhost:3000)
 - Run watch
     ```

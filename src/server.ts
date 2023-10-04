@@ -6,8 +6,12 @@ import orderHandler from './handlers/orderHandler';
 import bodyParser from 'body-parser';
 
 const app: express.Application = express();
-const address: string = '0.0.0.0:3000';
 
+let port = 3000;
+if (process.env.ENV === 'test') {
+  port = 3333;
+}
+const address: string = `http://localhost:${port}`;
 app.use(express.json());
 
 app.use(
@@ -24,7 +28,7 @@ app.get('/', function (_req: Request, res: Response) {
   res.send('Hello World!');
 });
 
-app.listen(3000, function () {
+app.listen(port, function () {
   console.log(`starting app on: ${address}`);
 });
 

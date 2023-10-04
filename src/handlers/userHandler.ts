@@ -80,12 +80,23 @@ const getUserInfo = async (_req: Request, res: Response): Promise<void> => {
   }
 };
 
+const index = async (_req: Request, res: Response): Promise<void> => {
+  try {
+    const userInfo = await store.index();
+    res.json(userInfo);
+  } catch (err) {
+    res.status(403);
+    res.json({ code: 403, message: `${err}` });
+  }
+};
+
 const userHandler = (app: express.Application) => {
   app.post('/users/sign-up', create);
   app.post('/users/sign-in', authenticate);
   app.put('/users/:user_id', verifyToken, updateUserInfo);
   app.delete('/users/:user_id', verifyToken, deleteUser);
   app.get('/users/:user_id', verifyToken, getUserInfo);
+  app.get('/users', verifyToken, index);
 };
 
 export default userHandler;

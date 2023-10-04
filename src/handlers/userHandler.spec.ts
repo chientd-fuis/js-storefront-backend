@@ -125,4 +125,19 @@ describe('User Handler', () => {
       expect(response.status).toBe(401);
     });
   });
+
+  describe('GET /users', () => {
+    it('should return 200', async (): Promise<void> => {
+      const response = await request
+        .get(`/users`)
+        .set('Authorization', `Bearer ${token}`);
+      expect(response.status).toBe(200);
+      expect(response.body.length).toEqual(2);
+    });
+
+    it('should return 401 when token invalid', async (): Promise<void> => {
+      const response = await request.get(`/users`);
+      expect(response.status).toBe(401);
+    });
+  });
 });

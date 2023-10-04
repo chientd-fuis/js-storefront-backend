@@ -1,6 +1,5 @@
 import express, { Request, Response } from 'express';
 import { OrderModel } from '../model/order';
-import { verifyToken } from '../utils/functions/token';
 import {
   checkValidateNumber,
   checkValidateText
@@ -111,10 +110,10 @@ const deleteProductInOrder = async (
 const orderHandler = (app: express.Application) => {
   app.get('/orders/:orderId', getOrders);
   app.get('/orders', getOrdersByUserID);
-  app.post('/orders/add', verifyToken, create);
-  app.put('/orders/:orderId/:productId', verifyToken, updateProductInOrder);
-  app.delete('/orders/:orderId/:productId', verifyToken, deleteProductInOrder);
-  app.put('/orders/:orderId', verifyToken, changeStatusOrder);
+  app.post('/orders/add', create);
+  app.put('/orders/:orderId/:productId', updateProductInOrder);
+  app.delete('/orders/:orderId/:productId', deleteProductInOrder);
+  app.put('/orders/:orderId', changeStatusOrder);
 };
 
 export default orderHandler;

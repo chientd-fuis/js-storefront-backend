@@ -14,6 +14,19 @@ const PEPPER = process.env.BCRYPT_PASSWORD;
 const SALT_ROUNDS = process.env.SALT_ROUNDS as unknown as string;
 
 export class UserModel {
+  async index(): Promise<UserTypeInformation[]> {
+    try {
+      // @ts-ignore
+      const conn = await client.connect();
+      const sql = 'SELECT user_id, first_name, last_name FROM users';
+      const result = await conn.query(sql);
+      conn.release();
+      return result.rows;
+    } catch (error) {
+      throw new Error(`[Users] Error get all users`);
+    }
+  }
+
   async show(userId: number): Promise<UserTypeInformation> {
     try {
       // @ts-ignore

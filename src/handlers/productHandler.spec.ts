@@ -1,10 +1,7 @@
 import supertest from 'supertest';
 
 import app from '../server';
-import {
-  ProductTypeRequest,
-  ProductTypeResponse
-} from '../utils/interfaces/ProductType';
+import { ProductTypeRequest } from '../utils/interfaces/ProductType';
 import { UserTypeRequest } from '../utils/interfaces/UserType';
 
 const request = supertest(app);

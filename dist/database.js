@@ -23,12 +23,12 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var pg_1 = require("pg");
-var dotenv = __importStar(require("dotenv"));
+const pg_1 = require("pg");
+const dotenv = __importStar(require("dotenv"));
 dotenv.config();
-var _a = process.env, POSTGRES_HOST = _a.POSTGRES_HOST, POSTGRES_DB = _a.POSTGRES_DB, POSTGRES_USER = _a.POSTGRES_USER, POSTGRES_PASSWORD = _a.POSTGRES_PASSWORD, POSTGRES_TEST_DB = _a.POSTGRES_TEST_DB, ENV = _a.ENV;
-var client;
-console.log('ENV: ' + ENV);
+const { POSTGRES_HOST, POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_TEST_DB, ENV } = process.env;
+let client;
+console.log('Database enviroment: ' + ENV);
 if (ENV == 'dev') {
     client = new pg_1.Pool({
         host: POSTGRES_HOST,

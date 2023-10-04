@@ -13,7 +13,7 @@ const {
 } = process.env;
 let client;
 
-console.log('ENV: ' + ENV);
+console.log('Database enviroment: ' + ENV);
 
 if (ENV == 'dev') {
   client = new Pool({

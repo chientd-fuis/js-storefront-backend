@@ -1,11 +1,8 @@
 import supertest from 'supertest';
 
 import app from '../server';
-import { OrderStatus, OrderTypeRequest } from '../utils/interfaces/OrderType';
-import {
-  ProductTypeRequest,
-  ProductTypeResponse
-} from '../utils/interfaces/ProductType';
+import { OrderStatus } from '../utils/interfaces/OrderType';
+import { ProductTypeRequest } from '../utils/interfaces/ProductType';
 import { UserTypeRequest } from '../utils/interfaces/UserType';
 
 const request = supertest(app);
@@ -43,25 +40,8 @@ describe('Order Handler', () => {
 
   describe('POST /orders/add', () => {
     it('should return 400 when missing params', async (): Promise<void> => {
-      const response = await request
-        .post('/orders/add')
-        .set('Authorization', `Bearer ${token}`);
+      const response = await request.post('/orders/add');
       expect(response.status).toBe(400);
-    });
-
-    it('should return 401 when invalid token', async (): Promise<void> => {
-      const order: OrderTypeRequest = {
-        user_id: userId,
-        status: OrderStatus.ACTIVE,
-        products: [
-          {
-            product_id: productId,
-            quantity: 100
-          }
-        ]
-      };
-      const response = await request.post('/orders/add').send(order);
-      expect(response.status).toBe(401);
     });
 
     it('should return 200 success', async (): Promise<void> => {
@@ -74,10 +54,7 @@ describe('Order Handler', () => {
           }
         ]
       };
-      const response = await request
-        .post('/orders/add')
-        .set('Authorization', `Bearer ${token}`)
-        .send(order);
+      const response = await request.post('/orders/add').send(order);
       orderId = response.body.order_id;
       expect(response.status).toBe(200);
       expect(response.body.order_id).toEqual(1);
@@ -119,21 +96,14 @@ describe('Order Handler', () => {
 
   describe('PUT /orders/:order_id - update status', () => {
     it('should return 400 when missing status params', async (): Promise<void> => {
-      const response = await request
-        .put(`/orders/${orderId}`)
-        .set('Authorization', `Bearer ${token}`);
+      const response = await request.put(`/orders/${orderId}`);
       expect(response.status).toBe(400);
     });
 
-    it('should return 401 when invalid token', async (): Promise<void> => {
-      const response = await request.put(`/orders/${orderId}`);
-      expect(response.status).toBe(401);
-    });
-
     it('should return 200 success', async (): Promise<void> => {
-      const response = await request
-        .put(`/orders/${orderId}?status=${OrderStatus.COMPLETED}`)
-        .set('Authorization', `Bearer ${token}`);
+      const response = await request.put(
+        `/orders/${orderId}?status=${OrderStatus.COMPLETED}`
+      );
       expect(response.status).toBe(200);
       expect(response.body.order_id).toEqual(1);
       expect(response.body.status).toEqual(OrderStatus.COMPLETED);
@@ -143,32 +113,23 @@ describe('Order Handler', () => {
 
   describe('PUT /orders/:order_id/:product_id - update product', () => {
     it('should return 400 when missing status params', async (): Promise<void> => {
-      const response = await request
-        .put(`/orders/${orderId}/${productId}`)
-        .set('Authorization', `Bearer ${token}`);
+      const response = await request.put(`/orders/${orderId}/${productId}`);
       expect(response.status).toBe(400);
     });
 
-    it('should return 401 when invalid token', async (): Promise<void> => {
-      const response = await request.put(
-        `/orders/${orderId}/${productId}?quality=101`
-      );
-      expect(response.status).toBe(401);
-    });
-
     it('should return 200 success - only change quality', async (): Promise<void> => {
-      const response = await request
-        .put(`/orders/${orderId}/${productId}?quality=111`)
-        .set('Authorization', `Bearer ${token}`);
+      const response = await request.put(
+        `/orders/${orderId}/${productId}?quality=111`
+      );
       expect(response.status).toBe(200);
       expect(response.body.product_id).toEqual(1);
       expect(response.body.quantity).toEqual(111);
     });
 
     it('should return 200 success - add new exist product', async (): Promise<void> => {
-      const response = await request
-        .put(`/orders/${orderId}/${productId + 1}?quality=101`)
-        .set('Authorization', `Bearer ${token}`);
+      const response = await request.put(
+        `/orders/${orderId}/${productId + 1}?quality=101`
+      );
       expect(response.status).toBe(200);
       expect(response.body.product_id).toEqual(2);
       expect(response.body.quantity).toEqual(101);
@@ -177,32 +138,23 @@ describe('Order Handler', () => {
     });
 
     it('should return 400 - when not found product id', async (): Promise<void> => {
-      const response = await request
-        .put(`/orders/${orderId}/99?quality=101`)
-        .set('Authorization', `Bearer ${token}`);
+      const response = await request.put(`/orders/${orderId}/99?quality=101`);
       expect(response.status).toBe(400);
     });
   });
 
   describe('DELETE /orders/:order_id/:product_id - delete product in cart', () => {
-    it('should return 401 when invalid token', async (): Promise<void> => {
-      const response = await request.delete(`/orders/${orderId}/${productId}`);
-      expect(response.status).toBe(401);
-    });
-
     it('should return 200 success - delete success', async (): Promise<void> => {
-      const response = await request
-        .delete(`/orders/${orderId}/${productId}`)
-        .set('Authorization', `Bearer ${token}`);
+      const response = await request.delete(`/orders/${orderId}/${productId}`);
       expect(response.status).toBe(200);
       const res = await request.get(`/orders/${orderId}`);
       expect(res.body.products.length).toEqual(1);
     });
 
     it('should return 200 success - empty cart', async (): Promise<void> => {
-      const response = await request
-        .delete(`/orders/${orderId}/${productId + 1}`)
-        .set('Authorization', `Bearer ${token}`);
+      const response = await request.delete(
+        `/orders/${orderId}/${productId + 1}`
+      );
       expect(response.status).toBe(200);
       const res = await request.get(`/orders/${orderId}`);
       console.log(productId);
