@@ -13,7 +13,7 @@ let port = 3000;
 if (process.env.ENV === 'test') {
     port = 3333;
 }
-const address = `0.0.0.0:${port}`;
+const address = `http://localhost:${port}`;
 app.use(express_1.default.json());
 app.use(body_parser_1.default.urlencoded({
     extended: true
