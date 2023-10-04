@@ -1,31 +1,34 @@
-import { ProductTypeResponse } from "./ProductType"
-import { UserTypeInformation } from "./UserType"
-
 export enum OrderStatus {
-    COMPLETED = "complete",
-    ACTIVE = "active",
+  COMPLETED = 'complete',
+  ACTIVE = 'active'
 }
 
-export interface OrderTypeResponse extends OrderTypeRequest{
-    orderId: number
+export interface OrderTypeResponse extends OrderTypeRequest {
+  order_id: number;
 }
 
-export interface OrderTypeRequest {
-    userId: number,
-    status: OrderStatus,
-    products: OrderDetailTypeRequest[]
+export interface OrderType {
+  order_id: number;
+  user_id: number;
+  status: OrderStatus;
 }
 
-export interface OrderDetailTypeResponse {
-    product: ProductTypeResponse,
-    quantity: number
+export interface OrderTypeRequest extends OrderProductType {
+  user_id: number;
+  status: OrderStatus;
+}
+
+export interface OrderProductType {
+  products: OrderDetailTypeRequest[];
 }
 
 export interface OrderDetailTypeRequest {
-    productId: number,
-    quantity: number
+  product_id: number;
+  name?: string;
+  price?: string;
+  quantity: number;
 }
 
-export interface OrderDetailType extends OrderDetailTypeRequest{
-    orderId: number
+export interface OrderDetailType extends OrderDetailTypeRequest {
+  order_id: number;
 }

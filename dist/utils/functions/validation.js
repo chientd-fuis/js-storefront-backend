@@ -5,13 +5,13 @@ function checkValidateText(value) {
     if (value) {
         return value;
     }
-    throw new Error("Invalid parammetter!!!");
+    throw new Error('Invalid parammetter!!!');
 }
 exports.checkValidateText = checkValidateText;
 function checkValidateNumber(value) {
     if (value) {
         return value;
     }
-    throw new Error("Invalid parammetter!!!");
+    throw new Error('Invalid parammetter!!!');
 }
 exports.checkValidateNumber = checkValidateNumber;
