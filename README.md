@@ -34,6 +34,7 @@ cd to your project
     ```
     npm run migrate.up
     ```
+     ![image!](https://github.com/chientd-fuis/js-storefront-backend/blob/main/assets/migrate-up.png "alt")
 ## Connect to database
 Get containerID
 ```
@@ -56,6 +57,7 @@ show all tables
     ```
     npm run start
     ```
+    ![image!](https://github.com/chientd-fuis/js-storefront-backend/blob/main/assets/npm%20run%20start.png "alt")
 - build project
     ```
     npm run build
@@ -72,3 +74,4 @@ show all tables
 ```
 npm run test
 ```
+![image!](https://github.com/chientd-fuis/js-storefront-backend/blob/main/assets/npm%20run%20test.png "alt")
